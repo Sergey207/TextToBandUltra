@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sergey.texttobandultra.dialogs.AskFilePermissionDialog
@@ -59,6 +60,7 @@ class EBookCreator : ComponentActivity() {
 fun CreatorScreen() {
     val context = LocalContext.current
     val isDialog = remember { mutableStateOf(false) }
+    val successText = stringResource(id = R.string.app_created_successfully)
 
     Column(
         modifier = Modifier
@@ -87,12 +89,14 @@ fun CreatorScreen() {
                 onClick = {
                     saveApp(context)
                     Toast.makeText(
-                        context, "App created successfully!", Toast.LENGTH_SHORT
+                        context,
+                        successText,
+                        Toast.LENGTH_SHORT
                     ).show()
                 },
                 shape = RoundedCornerShape(10.dp)
             ) {
-                Text(text = "Create app", fontSize = 20.sp)
+                Text(text = stringResource(id = R.string.create_app), fontSize = 20.sp)
             }
         }
     }

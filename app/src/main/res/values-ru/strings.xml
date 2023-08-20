@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel">Отмена</string>
+    <string name="new_tab_name">Новое имя вкладки</string>
+    <string name="add">Добавить</string>
+    <string name="allow">Разрешить</string>
+    <string name="rename">Переименовать</string>
+    <string name="main">Основная</string>
+    <string name="create_app">Создать приложение</string>
+    <string name="app_created_successfully">Приложение создано!</string>
+    <string name="write_text_here">Пишите текст здесь</string>
+    <string name="create_ebook_app">Создать приложение eBook</string>
+    <string name="title_cannot_be_empty">Заголовок не может быть пустым!</string>
+    <string name="title_with_this_name_already_exists">Заголовок с такии именем уже существует!</string>
+    <string name="title_can_not_started_with_dot">Заголовок не может начинаться с .</string>
+    <string name="title_can_not_ended_with_space">Заголовок не может заканчиваться на пробел!</string>
+    <string name="symbol_sym_shouldt_use_in_title">Символ * не может использоваться в заголовке!</string>
+</resources>

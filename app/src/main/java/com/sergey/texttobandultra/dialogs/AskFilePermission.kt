@@ -17,10 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.sergey.texttobandultra.MainActivity
+import com.sergey.texttobandultra.R
 
 
 @Composable
@@ -41,7 +43,10 @@ fun AskFilePermissionDialog(
                     .fillMaxWidth()
                     .padding(10.dp)
             ) {
-                Text(text = "You need allow to manage all files to write app!", fontSize = 20.sp)
+                Text(
+                    text = "You need allow to manage all files to write app!",
+                    fontSize = 20.sp
+                )  // TODO
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -57,14 +62,14 @@ fun AskFilePermissionDialog(
                         dialogState.value = false
                         context.startActivity(Intent(context, MainActivity::class.java))
                     }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(id = R.string.cancel))
                     }
 
                     Button(shape = RoundedCornerShape(5.dp), onClick = {
 //                        ActivityCompat.requestPermissions(, Array(1, ""))
                         ActivityResultContracts.RequestPermission()
                     }) {
-                        Text(text = "Allow")
+                        Text(text = stringResource(id = R.string.allow))
                     }
                 }
             }

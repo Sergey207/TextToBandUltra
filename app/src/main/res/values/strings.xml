@@ -1,4 +1,19 @@
 <resources>
-    <string name="app_name">Text To Band Ultra</string>
-    <string name="title_activity_ebook_creator">eBookCreator</string>
+    <string name="app_name" translatable="false">Text To Band Ultra</string>
+    <string name="title_activity_ebook_creator" translatable="false">eBookCreator</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_tab_name">New tab name</string>
+    <string name="add">Add</string>
+    <string name="allow">Allow</string>
+    <string name="rename">Rename</string>
+    <string name="main">Main</string>
+    <string name="create_app">Create app</string>
+    <string name="app_created_successfully">App created successfully!</string>
+    <string name="write_text_here">Write text here</string>
+    <string name="create_ebook_app">Create eBook app</string>
+    <string name="title_cannot_be_empty">Title cannot be empty!</string>
+    <string name="title_with_this_name_already_exists">Title with this name already exists!</string>
+    <string name="title_can_not_started_with_dot">Title can not started with .</string>
+    <string name="title_can_not_ended_with_space">Title can not ended with space!</string>
+    <string name="symbol_sym_shouldt_use_in_title">Symbol * should`t use in title!</string>
 </resources>

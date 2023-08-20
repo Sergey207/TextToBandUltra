@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,7 +62,7 @@ const val DEBUG_TABS_NUM = 5
 fun Screen() {
     val context = LocalContext.current
     if (tabs.isEmpty())
-        tabs.add(TextTab("Main"))
+        tabs.add(TextTab(stringResource(id = R.string.main)))
 
     if (DEBUG) {
         for (i in 1..DEBUG_TABS_NUM) {
@@ -110,7 +111,7 @@ fun Screen() {
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f, fill = true),
-            label = { Text(text = "Write your text here") },
+            label = { Text(text = stringResource(id = R.string.write_text_here)) },
         )
 
         Spacer(modifier = Modifier.height(15.dp))
@@ -125,7 +126,7 @@ fun Screen() {
                 },
                 shape = RoundedCornerShape(10.dp)
             ) {
-                Text(text = "Create eBook app", fontSize = 20.sp)
+                Text(text = stringResource(id = R.string.create_app), fontSize = 20.sp)
             }
         }
     }

@@ -20,8 +20,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.sergey.texttobandultra.R
 import com.sergey.texttobandultra.TextTab
 import com.sergey.texttobandultra.checkName
 import com.sergey.texttobandultra.tabs
@@ -48,7 +50,7 @@ fun AddTabDialog(
             ) {
                 OutlinedTextField(
                     value = newTabTitle.value,
-                    label = { Text(text = "New tab name") },
+                    label = { Text(text = stringResource(id = R.string.new_tab_name)) },
                     onValueChange = { newTabTitle.value = it.replace("\n", "") },
                 )
 
@@ -67,11 +69,11 @@ fun AddTabDialog(
                     Button(shape = RoundedCornerShape(5.dp), onClick = {
                         dialogState.value = false
                     }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(id = R.string.cancel))
                     }
 
                     Button(shape = RoundedCornerShape(5.dp), onClick = {
-                        val error = checkName(newTabTitle.value)
+                        val error = checkName(newTabTitle.value, context)
                         if (error.isNotEmpty())
                             Toast.makeText(
                                 context,
@@ -83,7 +85,7 @@ fun AddTabDialog(
                             dialogState.value = false
                         }
                     }) {
-                        Text(text = "Add")
+                        Text(text = stringResource(id = R.string.add))
                     }
                 }
             }
