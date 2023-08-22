@@ -1,5 +1,6 @@
 package com.sergey.texttobandultra.widgets
 
+import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -22,16 +23,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sergey.texttobandultra.dialogs.EditTabDialog
 import com.sergey.texttobandultra.R
 import com.sergey.texttobandultra.TextTab
+import com.sergey.texttobandultra.dialogs.EditTabDialog
+import com.sergey.texttobandultra.saveTabs
 import com.sergey.texttobandultra.tabs
 
 @Composable
 fun Tab(
     tab: TextTab,
     tabNumber: Int,
-    currentIndex: MutableState<Int>
+    currentIndex: MutableState<Int>,
+    context: Context
 ) {
     val height = 57.dp
     val activeButtonColors = ButtonDefaults.buttonColors(
@@ -59,8 +62,7 @@ fun Tab(
         colors = if (isActive) activeButtonColors else disableButtonColors
     ) {
         Row {
-            Text(text = tab.title, fontSize = 20.sp)
-
+            Text(text = "${tab.title}${if (tab.toSave.value) "*" else ""}", fontSize = 20.sp)
             IconButton(onClick = {
                 isDialogActive.value = true
             }, modifier = Modifier.size(30.dp)) {
@@ -76,7 +78,9 @@ fun Tab(
                     onClick = {
                         if (currentIndex.value > tabNumber)
                             currentIndex.value--
+                        tabs[tabNumber].delete(context)
                         tabs.remove(tabs[tabNumber])
+                        saveTabs(context)
                     },
                     modifier = Modifier.size(30.dp)
                 ) {

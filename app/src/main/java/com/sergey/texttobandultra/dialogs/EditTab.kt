@@ -81,13 +81,12 @@ fun EditTabDialog(
                                 Toast.LENGTH_SHORT
                             ).show()
                         else {
-                            tabs[indexOfTitle].title = newTabTitle.value
+                            tabs[indexOfTitle].renameTab(context, newTabTitle.value)
                             dialogState.value = false
                         }
                     }
                     ) {
                         Text(text = stringResource(id = R.string.rename))
-
                     }
                 }
             }

@@ -87,6 +87,7 @@ fun CreatorScreen() {
         ) {
             Button(
                 onClick = {
+                    saveTabs(context)
                     saveApp(context)
                     Toast.makeText(
                         context,

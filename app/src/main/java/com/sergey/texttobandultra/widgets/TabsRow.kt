@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.sergey.texttobandultra.tabs
 
 @Composable
@@ -20,7 +21,7 @@ fun TabsRow(
     ) {
             items(tabs.size)
             {
-                Tab(tabs[it], it, currentIndex)
+                Tab(tabs[it], it, currentIndex, LocalContext.current)
             }
     }
 }

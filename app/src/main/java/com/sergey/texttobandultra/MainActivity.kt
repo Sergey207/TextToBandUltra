@@ -61,19 +61,22 @@ const val DEBUG_TABS_NUM = 5
 @Composable
 fun Screen() {
     val context = LocalContext.current
-    if (tabs.isEmpty())
-        tabs.add(TextTab(stringResource(id = R.string.main)))
 
+    if (tabs.isEmpty())
+        tabs.addAll(getTabs(context))
+    if (tabs.isEmpty()) {
+        tabs.add(TextTab(stringResource(id = R.string.main)))
+        saveTabs(context)
+    }
     if (DEBUG) {
         for (i in 1..DEBUG_TABS_NUM) {
             tabs.add(TextTab("Test tab $i", remember {
                 mutableStateOf("Text for testing $i")
-            }))
+            }, toSave = remember { mutableStateOf(false) }))
         }
         DEBUG = false
     }
 
-//    val currentIndex = remember { mutableStateOf(0) }
     val dialogState = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
@@ -107,6 +110,7 @@ fun Screen() {
             value = tabs[currentIndex.value].text.value,
             onValueChange = {
                 tabs[currentIndex.value].text.value = it
+                tabs[currentIndex.value].toSave.value = true
             },
             modifier = Modifier
                 .fillMaxSize()
@@ -122,6 +126,7 @@ fun Screen() {
         ) {
             Button(
                 onClick = {
+                    saveTabs(context)
                     context.startActivity(Intent(context, EBookCreator::class.java))
                 },
                 shape = RoundedCornerShape(10.dp)

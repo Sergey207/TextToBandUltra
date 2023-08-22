@@ -81,7 +81,9 @@ fun AddTabDialog(
                                 Toast.LENGTH_SHORT
                             ).show()
                         else {
-                            tabs.add(TextTab(newTabTitle.value))
+                            val newTab = TextTab(newTabTitle.value)
+                            tabs.add(newTab)
+                            newTab.writeToFile(context)
                             dialogState.value = false
                         }
                     }) {
