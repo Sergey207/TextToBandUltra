@@ -119,3 +119,49 @@ fun copyApp(context: Context, basePath: File) {
     }
 }
 
+fun getTabsFolder(context: Context): File {
+    val basePath = context.getExternalFilesDir(null) ?: return File("")
+    val tabsPath = basePath.resolve("tabs")
+    if (!tabsPath.exists())
+        tabsPath.mkdir()
+    if (!(tabsPath.resolve("tabs.json").exists()))
+        tabsPath.resolve("tabs.json").writeText("[]")
+    return tabsPath
+}
+
+
+fun saveTabs(context: Context) {
+    val tabsPath = getTabsFolder(context)
+    for (tab in tabs) {
+        tab.toSave.value = false
+        tabsPath.resolve("${tab.title}.txt").writeText(tab.text.value)
+    }
+
+    val gson = Gson()
+    tabsPath.resolve("tabs.json").writeText(gson.toJson(tabs.map { it.title }))
+}
+
+fun getTabs(context: Context): MutableList<TextTab> {
+    val tabsPath = getTabsFolder(context)
+    val gson = Gson()
+    val tabNames = gson.fromJson(
+        tabsPath.resolve("tabs.json").readText(),
+        mutableListOf<String>()::class.java
+    )
+
+    val res = mutableListOf<TextTab>()
+    for (tabName in tabNames) {
+        val tabFile = tabsPath.resolve("${tabName}.txt")
+        if (!tabFile.exists())
+            tabFile.writeText("")
+
+        res.add(
+            TextTab(
+                tabName,
+                mutableStateOf(tabFile.readText().drop(1)),
+                toSave = mutableStateOf(false)
+            )
+        )
+    }
+    return res
+}

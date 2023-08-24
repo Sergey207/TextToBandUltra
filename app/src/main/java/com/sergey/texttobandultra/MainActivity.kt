@@ -117,6 +117,7 @@ fun Screen() {
             onValueChange = {
                 tabs[currentIndex.value].toSave.value = true
                 tabs[currentIndex.value].text.value = it
+                tabs[currentIndex.value].toSave.value = true
             },
             modifier = Modifier
                 .fillMaxSize()

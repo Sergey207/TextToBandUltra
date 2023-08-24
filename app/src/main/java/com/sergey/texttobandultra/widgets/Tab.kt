@@ -1,5 +1,6 @@
 package com.sergey.texttobandultra.widgets
 
+import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -33,7 +34,8 @@ import com.sergey.texttobandultra.tabsPath
 fun Tab(
     tab: TextTab,
     tabNumber: Int,
-    currentIndex: MutableState<Int>
+    currentIndex: MutableState<Int>,
+    context: Context
 ) {
     val height = 57.dp
     val activeButtonColors = ButtonDefaults.buttonColors(
@@ -78,7 +80,9 @@ fun Tab(
                     onClick = {
                         if (currentIndex.value > tabNumber)
                             currentIndex.value--
+                        tabs[tabNumber].delete(context)
                         tabs.remove(tabs[tabNumber])
+
                         tabsPath.resolve("${tab.title}.txt").delete()
                         tabs.save()
                     },

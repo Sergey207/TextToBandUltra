@@ -89,7 +89,6 @@ fun EditTabDialog(
                     }
                     ) {
                         Text(text = stringResource(id = R.string.rename))
-
                     }
                 }
             }

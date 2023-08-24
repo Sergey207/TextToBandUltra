@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("com.google.code.gson:gson:2.9.1")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
 
     implementation("com.google.code.gson:gson:2.10.1")
