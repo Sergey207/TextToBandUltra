@@ -2,7 +2,6 @@ package com.sergey.texttobandultra
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -87,12 +86,7 @@ fun CreatorScreen() {
         ) {
             Button(
                 onClick = {
-                    saveApp(context)
-                    Toast.makeText(
-                        context,
-                        successText,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    saveApp(context, successText)
                 },
                 shape = RoundedCornerShape(10.dp)
             ) {

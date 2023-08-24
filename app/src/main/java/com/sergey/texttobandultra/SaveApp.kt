@@ -2,13 +2,14 @@ package com.sergey.texttobandultra
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import zip
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 
 
-fun saveApp(context: Context) {
+fun saveApp(context: Context, successText: String) {
     if (!basePath.exists()) basePath.mkdir()
 
     for (file in basePath.listFiles()!!)
@@ -40,6 +41,12 @@ fun saveApp(context: Context) {
     zip(appPath, zipPath)
     zipPath.renameTo(basePath.resolve("app.bin"))
     appPath.deleteRecursively()
+
+    Toast.makeText(
+        context,
+        successText,
+        Toast.LENGTH_SHORT
+    ).show()
 }
 
 
