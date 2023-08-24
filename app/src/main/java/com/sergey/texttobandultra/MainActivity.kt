@@ -53,9 +53,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-var DEBUG = false
-const val DEBUG_TABS_NUM = 5
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
@@ -64,16 +61,6 @@ fun Screen() {
     if (tabs.isEmpty())
         tabs.add(TextTab(stringResource(id = R.string.main)))
 
-    if (DEBUG) {
-        for (i in 1..DEBUG_TABS_NUM) {
-            tabs.add(TextTab("Test tab $i", remember {
-                mutableStateOf("Text for testing $i")
-            }))
-        }
-        DEBUG = false
-    }
-
-//    val currentIndex = remember { mutableStateOf(0) }
     val dialogState = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
