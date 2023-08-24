@@ -17,4 +17,5 @@
     <string name="title_can_not_ended_with_space">Title can not ended with space!</string>
     <string name="symbol_sym_shouldt_use_in_title">Symbol * should`t use in title!</string>
     <string name="error_message">Error!</string>
+    <string name="you_need_allow">You need allow to manage all files to save app!</string>
 </resources>

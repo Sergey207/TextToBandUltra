@@ -3,6 +3,7 @@ package com.sergey.texttobandultra
 import android.content.ContentValues
 import android.content.Context
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -46,6 +47,14 @@ fun saveApp(context: Context, successText: String, errorText: String) {
     zipPath.renameTo(basePath.resolve("app.bin"))
     appPath.deleteRecursively()
 
+    Toast.makeText(
+        context,
+        if (copyToDownloads(context)) successText else errorText,
+        Toast.LENGTH_SHORT
+    ).show()
+}
+
+fun copyToDownloads(context: Context): Boolean {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, "app.bin")
@@ -53,28 +62,32 @@ fun saveApp(context: Context, successText: String, errorText: String) {
         val dstUri =
             context.contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
         if (dstUri != null) {
-
             val src = FileInputStream(basePath.resolve("app.bin"))
             val dst = context.contentResolver.openOutputStream(dstUri)
             src.copyTo(dst!!)
             src.close()
             dst.close()
 
-            Toast.makeText(
-                context,
-                successText,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            Toast.makeText(
-                context,
-                errorText,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+            return true
+        } else
+            return false
+
+    } else {
+        val downloadDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        if (downloadDir.canWrite()) {
+            val src = FileInputStream(basePath.resolve("app.bin"))
+            val dst = FileOutputStream(File(downloadDir, "app.bin"))
+            src.copyTo(dst)
+            src.close()
+            dst.close()
+
+            return true
+        } else
+            return false
+
     }
 }
-
 
 fun copyFile(inputStream: InputStream, outputStream: FileOutputStream) {
     val buffer = ByteArray(1024)

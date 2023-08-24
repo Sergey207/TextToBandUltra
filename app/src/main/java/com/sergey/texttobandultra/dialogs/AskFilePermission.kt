@@ -21,16 +21,30 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.isGranted
 import com.sergey.texttobandultra.MainActivity
 import com.sergey.texttobandultra.R
+import com.sergey.texttobandultra.saveApp
 
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AskFilePermissionDialog(
     dialogState: MutableState<Boolean>,
     context: Context,
-//    activity: Activity
+    permissionState: PermissionState,
 ) {
+    if (permissionState.status.isGranted) {
+        dialogState.value = false
+        saveApp(
+            context,
+            stringResource(id = R.string.app_created_successfully),
+            stringResource(id = R.string.error_message)
+        )
+    }
+
     Dialog(onDismissRequest = { dialogState.value = false }) {
         Card(
             shape = RoundedCornerShape(10.dp),
@@ -44,7 +58,7 @@ fun AskFilePermissionDialog(
                     .padding(10.dp)
             ) {
                 Text(
-                    text = "You need allow to manage all files to write app!",
+                    text = stringResource(id = R.string.you_need_allow),
                     fontSize = 20.sp
                 )  // TODO
                 Spacer(
@@ -66,8 +80,7 @@ fun AskFilePermissionDialog(
                     }
 
                     Button(shape = RoundedCornerShape(5.dp), onClick = {
-//                        ActivityCompat.requestPermissions(, Array(1, ""))
-                        ActivityResultContracts.RequestPermission()
+                        permissionState.launchPermissionRequest()
                     }) {
                         Text(text = stringResource(id = R.string.allow))
                     }

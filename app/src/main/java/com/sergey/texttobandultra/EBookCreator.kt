@@ -1,5 +1,6 @@
 package com.sergey.texttobandultra
 
+import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +26,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import com.sergey.texttobandultra.dialogs.AskFilePermissionDialog
 import com.sergey.texttobandultra.ui.theme.TextToBandUltraTheme
 import com.sergey.texttobandultra.widgets.FilesCard
@@ -56,15 +60,21 @@ class EBookCreator : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CreatorScreen() {
     val context = LocalContext.current
     val successText = stringResource(id = R.string.app_created_successfully)
     val errorText = stringResource(id = R.string.error_message)
+    val writeFilesPermission = rememberPermissionState(
+        permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     val isDialog = remember { mutableStateOf(false) }
     val hasPermission = remember { mutableStateOf(false) }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        hasPermission.value = true
+    else if (writeFilesPermission.status.isGranted)
         hasPermission.value = true
 
     Column(
@@ -104,6 +114,10 @@ fun CreatorScreen() {
         }
     }
     if (isDialog.value) {
-        AskFilePermissionDialog(dialogState = isDialog, context = context)
+        AskFilePermissionDialog(
+            dialogState = isDialog,
+            context = context,
+            permissionState = writeFilesPermission
+        )
     }
 }
