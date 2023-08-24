@@ -81,7 +81,7 @@ fun AddTabDialog(
                                 Toast.LENGTH_SHORT
                             ).show()
                         else {
-                            tabs.add(TextTab(newTabTitle.value))
+                            tabs.add(TextTab(newTabTitle.value, toSave = mutableStateOf(true)))
                             dialogState.value = false
                         }
                     }) {

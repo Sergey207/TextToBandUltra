@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.sergey.texttobandultra.R
 import com.sergey.texttobandultra.checkName
+import com.sergey.texttobandultra.save
 import com.sergey.texttobandultra.tabs
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,6 +83,7 @@ fun EditTabDialog(
                             ).show()
                         else {
                             tabs[indexOfTitle].title = newTabTitle.value
+                            tabs.save(clear = true)
                             dialogState.value = false
                         }
                     }

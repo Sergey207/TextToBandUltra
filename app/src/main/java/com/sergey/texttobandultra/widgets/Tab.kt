@@ -22,10 +22,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sergey.texttobandultra.dialogs.EditTabDialog
 import com.sergey.texttobandultra.R
 import com.sergey.texttobandultra.TextTab
+import com.sergey.texttobandultra.dialogs.EditTabDialog
+import com.sergey.texttobandultra.save
 import com.sergey.texttobandultra.tabs
+import com.sergey.texttobandultra.tabsPath
 
 @Composable
 fun Tab(
@@ -59,7 +61,7 @@ fun Tab(
         colors = if (isActive) activeButtonColors else disableButtonColors
     ) {
         Row {
-            Text(text = tab.title, fontSize = 20.sp)
+            Text(text = "${tab.title}${if (tab.toSave.value) "*" else ""}", fontSize = 20.sp)
 
             IconButton(onClick = {
                 isDialogActive.value = true
@@ -77,6 +79,8 @@ fun Tab(
                         if (currentIndex.value > tabNumber)
                             currentIndex.value--
                         tabs.remove(tabs[tabNumber])
+                        tabsPath.resolve("${tab.title}.txt").delete()
+                        tabs.save()
                     },
                     modifier = Modifier.size(30.dp)
                 ) {

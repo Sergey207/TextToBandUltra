@@ -7,7 +7,9 @@ import com.google.gson.Gson
 import java.io.File
 
 const val UTF_SYM = '\uFEFF'
-val tabsPath = File("")
+
+var basePath = File("")
+var tabsPath = File("")
 
 data class TextTab(
     var title: String,
@@ -15,15 +17,20 @@ data class TextTab(
     var toSave: MutableState<Boolean> = mutableStateOf(false)
 )
 
-fun MutableList<TextTab>.save() {
+fun MutableList<TextTab>.save(clear: Boolean = false) {
+    if (clear) {
+        tabsPath.deleteRecursively()
+        tabsPath.mkdir()
+    }
+
     for (tab in this) {
         tabsPath
             .resolve("${tab.title}.txt")
-            .writeText("$UTF_SYM${tab.text}", Charsets.UTF_16LE)
+            .writeText("$UTF_SYM${tab.text.value}", Charsets.UTF_16LE)
         tab.toSave.value = false
     }
     tabsPath.resolve("tabs.json").writeText(
-        Gson().toJson(this.map { "${it.title}.txt" })
+        Gson().toJson(this.map { it.title })
     )
 }
 

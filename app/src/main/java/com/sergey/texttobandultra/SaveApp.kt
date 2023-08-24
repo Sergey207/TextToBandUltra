@@ -9,10 +9,11 @@ import java.io.InputStream
 
 
 fun saveApp(context: Context) {
-    val basePath = context.getExternalFilesDir(null) ?: return
     if (!basePath.exists()) basePath.mkdir()
 
-    for (file in basePath.listFiles()!!) file.deleteRecursively()
+    for (file in basePath.listFiles()!!)
+        if (file.name != "tabs")
+            file.deleteRecursively()
 
     val appPath = basePath.resolve("app")
     appPath.mkdir()
@@ -24,13 +25,13 @@ fun saveApp(context: Context) {
     for (el in tabs) {
         assetsPath
             .resolve("${el.title}.txt")
-            .writeText("${'\uFEFF'}${el.text.value}", Charsets.UTF_16LE)
+            .writeText("${UTF_SYM}${el.text.value}", Charsets.UTF_16LE)
     }
 
     assetsPath
         .resolve("pages.txt")
         .writeText(
-            tabs.joinToString(",") { "${'\uFEFF'}${it.title}.txt" },
+            UTF_SYM + tabs.joinToString(",") { "${it.title}.txt" },
             Charsets.UTF_16LE
         )
 

@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.gson.Gson
 import com.sergey.texttobandultra.dialogs.AddTabDialog
 import com.sergey.texttobandultra.ui.theme.TextToBandUltraTheme
 import com.sergey.texttobandultra.widgets.TabsRow
@@ -58,8 +59,29 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Screen() {
     val context = LocalContext.current
-    if (tabs.isEmpty())
-        tabs.add(TextTab(stringResource(id = R.string.main)))
+    if (tabs.isEmpty()) {
+        basePath = context.getExternalFilesDir(null) ?: return
+        tabsPath = basePath.resolve("tabs")
+        if (!tabsPath.exists()) {
+            tabsPath.mkdir()
+            tabs.add(TextTab(stringResource(id = R.string.main)))
+            tabs.save()
+        } else {
+            for (fileName in Gson().fromJson(
+                tabsPath.resolve("tabs.json").readText(),
+                mutableListOf<String>()::class.java
+            )) {
+                tabs.add(
+                    TextTab(fileName,
+                        remember {
+                            mutableStateOf(
+                                tabsPath.resolve("$fileName.txt").readText(Charsets.UTF_16LE)
+                            )
+                        })
+                )
+            }
+        }
+    }
 
     val dialogState = remember { mutableStateOf(false) }
     Column(
@@ -93,6 +115,7 @@ fun Screen() {
         OutlinedTextField(
             value = tabs[currentIndex.value].text.value,
             onValueChange = {
+                tabs[currentIndex.value].toSave.value = true
                 tabs[currentIndex.value].text.value = it
             },
             modifier = Modifier
@@ -109,6 +132,7 @@ fun Screen() {
         ) {
             Button(
                 onClick = {
+                    tabs.save()
                     context.startActivity(Intent(context, EBookCreator::class.java))
                 },
                 shape = RoundedCornerShape(10.dp)
