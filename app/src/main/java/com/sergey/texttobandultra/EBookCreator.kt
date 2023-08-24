@@ -1,6 +1,7 @@
 package com.sergey.texttobandultra
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -58,8 +59,13 @@ class EBookCreator : ComponentActivity() {
 @Composable
 fun CreatorScreen() {
     val context = LocalContext.current
-    val isDialog = remember { mutableStateOf(false) }
     val successText = stringResource(id = R.string.app_created_successfully)
+    val errorText = stringResource(id = R.string.error_message)
+
+    val isDialog = remember { mutableStateOf(false) }
+    val hasPermission = remember { mutableStateOf(false) }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        hasPermission.value = true
 
     Column(
         modifier = Modifier
@@ -86,7 +92,10 @@ fun CreatorScreen() {
         ) {
             Button(
                 onClick = {
-                    saveApp(context, successText)
+                    if (hasPermission.value)
+                        saveApp(context, successText, errorText)
+                    else
+                        isDialog.value = true
                 },
                 shape = RoundedCornerShape(10.dp)
             ) {

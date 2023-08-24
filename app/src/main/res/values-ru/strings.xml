@@ -15,4 +15,5 @@
     <string name="title_can_not_started_with_dot">Заголовок не может начинаться с .</string>
     <string name="title_can_not_ended_with_space">Заголовок не может заканчиваться на пробел!</string>
     <string name="symbol_sym_shouldt_use_in_title">Символ * не может использоваться в заголовке!</string>
+    <string name="error_message">Ошибка!</string>
 </resources>

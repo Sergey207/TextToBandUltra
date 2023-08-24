@@ -1,15 +1,19 @@
 package com.sergey.texttobandultra
 
+import android.content.ContentValues
 import android.content.Context
+import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import zip
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 
 
-fun saveApp(context: Context, successText: String) {
+fun saveApp(context: Context, successText: String, errorText: String) {
     if (!basePath.exists()) basePath.mkdir()
 
     for (file in basePath.listFiles()!!)
@@ -42,11 +46,33 @@ fun saveApp(context: Context, successText: String) {
     zipPath.renameTo(basePath.resolve("app.bin"))
     appPath.deleteRecursively()
 
-    Toast.makeText(
-        context,
-        successText,
-        Toast.LENGTH_SHORT
-    ).show()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "app.bin")
+        }
+        val dstUri =
+            context.contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+        if (dstUri != null) {
+
+            val src = FileInputStream(basePath.resolve("app.bin"))
+            val dst = context.contentResolver.openOutputStream(dstUri)
+            src.copyTo(dst!!)
+            src.close()
+            dst.close()
+
+            Toast.makeText(
+                context,
+                successText,
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            Toast.makeText(
+                context,
+                errorText,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 }
 
 
