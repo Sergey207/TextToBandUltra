@@ -7,7 +7,7 @@
     <string name="rename">Переименовать</string>
     <string name="main">Основная</string>
     <string name="create_app">Создать приложение</string>
-    <string name="app_created_successfully">Приложение создано!</string>
+    <string name="app_created_successfully">Приложение создано! Вы можете найти его в загрузках!</string>
     <string name="write_text_here">Пишите текст здесь</string>
     <string name="create_ebook_app">Создать приложение eBook</string>
     <string name="title_cannot_be_empty">Заголовок не может быть пустым!</string>

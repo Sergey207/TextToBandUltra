@@ -8,7 +8,7 @@
     <string name="rename">Rename</string>
     <string name="main">Main</string>
     <string name="create_app">Create app</string>
-    <string name="app_created_successfully">App created successfully!</string>
+    <string name="app_created_successfully">App created successfully! You can found it in downloads!</string>
     <string name="write_text_here">Write text here</string>
     <string name="create_ebook_app">Create eBook app</string>
     <string name="title_cannot_be_empty">Title cannot be empty!</string>
