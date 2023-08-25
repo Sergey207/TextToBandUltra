@@ -1,6 +1,7 @@
 package com.sergey.texttobandultra
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import com.google.gson.Gson
@@ -35,4 +36,4 @@ fun MutableList<TextTab>.save(clear: Boolean = false) {
 }
 
 val tabs = mutableStateListOf<TextTab>()
-val currentIndex = mutableStateOf(0)
+val currentIndex = mutableIntStateOf(0)
