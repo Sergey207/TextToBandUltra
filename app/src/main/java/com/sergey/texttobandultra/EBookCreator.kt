@@ -90,7 +90,7 @@ fun CreatorScreen() {
                 .weight(10f, fill = true),
         )
         {
-            items(tabs.size) { index -> FilesCard(tab = tabs[index]) }
+            items(tabs.size) { index -> FilesCard(index) }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

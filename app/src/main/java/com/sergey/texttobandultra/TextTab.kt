@@ -15,7 +15,8 @@ var tabsPath = File("")
 data class TextTab(
     var title: String,
     var text: MutableState<String> = mutableStateOf(""),
-    var toSave: MutableState<Boolean> = mutableStateOf(false)
+    var toSave: MutableState<Boolean> = mutableStateOf(false),
+    var enabled: MutableState<Boolean> = mutableStateOf(true)
 )
 
 fun MutableList<TextTab>.save(clear: Boolean = false) {

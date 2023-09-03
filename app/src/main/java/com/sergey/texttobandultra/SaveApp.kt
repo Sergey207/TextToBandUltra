@@ -28,7 +28,7 @@ fun saveApp(context: Context, successText: String, errorText: String) {
 
     val assetsPath = appPath.resolve("assets")
 
-    for (el in tabs) {
+    for (el in tabs.filter { it.enabled.value }) {
         assetsPath
             .resolve("${el.title}.txt")
             .writeText("${UTF_SYM}${el.text.value}", Charsets.UTF_16LE)
@@ -37,7 +37,7 @@ fun saveApp(context: Context, successText: String, errorText: String) {
     assetsPath
         .resolve("pages.txt")
         .writeText(
-            UTF_SYM + tabs.joinToString(",") { "${it.title}.txt" },
+            UTF_SYM + tabs.filter { it.enabled.value }.joinToString(",") { "${it.title}.txt" },
             Charsets.UTF_16LE
         )
 
